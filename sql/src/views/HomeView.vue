@@ -1,9 +1,15 @@
+<template>
+  <div>
+    <HelloWorld>
+
+</HelloWorld>
+  </div>
+</template>
+
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
+import HelloWorld from '@/components/HelloWorld.vue';
 </script>
 
-<template>
-  <main>
-    <TheWelcome />
-  </main>
-</template>
+<style lang="scss" scoped>
+
+</style>
