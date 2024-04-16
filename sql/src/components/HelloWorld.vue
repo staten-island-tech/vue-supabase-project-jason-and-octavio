@@ -14,12 +14,17 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 
 console.log(supabase)
 
-const { error } = await supabase
+const { insert } = await supabase
 .from('Posts')
 .insert({id:1, user_name:'jake'})
 
-console.log({error})
+console.log({insert})
 
+const { data } = await supabase.auth.signUp({
+  email: 'example@gmail.com',
+})
+
+console.log({data})
 </script>
 
 <style lang="scss" scoped>
