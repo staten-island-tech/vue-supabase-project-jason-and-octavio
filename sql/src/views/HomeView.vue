@@ -1,13 +1,13 @@
 <template>
   <div>
-    <HelloWorld>
+    <SignUp>
 
-</HelloWorld>
+    </SignUp>
   </div>
 </template>
 
 <script setup>
-import HelloWorld from '@/components/HelloWorld.vue';
+import SignUp from '@/components/SignUp.vue'
 </script>
 
 <style lang="scss" scoped>
