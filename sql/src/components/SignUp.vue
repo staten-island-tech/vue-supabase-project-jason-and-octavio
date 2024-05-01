@@ -2,9 +2,10 @@
 <form class="row flex-center flex" @submit.prevent="handleLogin">
     <div class="col-6 form-widget">
       <h1 class="header">Sign Up</h1>
-      <p class="description">Sign in via magic link with your email below</p>
+      <p class="description">Sign up via magic link with your email and password below</p>
       <div>
         <input class="inputField" required type="email" placeholder="Your email" v-model="email" />
+        <input class="inputField" required type="password" placeholder="Your password" v-model="password" />
       </div>
       <div>
         <input
@@ -38,12 +39,16 @@ console.log(supabase)
 
 const loading = ref(false)
 const email = ref('')
+const password = ref('')
 
 const handleLogin = async () => {
   try {
     loading.value = true
     const { error } = await supabase.auth.signInWithOtp({
       email: email.value,
+    })
+    const { password } = await supabase.auth.signInWithOtp({
+      password: password.value,
     })
     if (error) throw error
     alert('Check your email for the login link!')
