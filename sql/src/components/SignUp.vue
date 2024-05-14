@@ -21,13 +21,8 @@
 
 <script setup>
 
-import { createClient } from '@supabase/supabase-js'
-import { ref } from 'vue'
-
-const supabaseUrl = 'https://shoxgvzvnshjjblidrda.supabase.co'
-const supabasekey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNob3hndnp2bnNoampibGlkcmRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIzMjMxNTgsImV4cCI6MjAyNzg5OTE1OH0.5Ixgcj16B0S8pklU2ZSUZRrVCjXvrY6EBbULeXOpr5Y"
-
-const supabase = createClient(supabaseUrl, supabasekey);
+import { ref } from 'vue';
+import { supabase } from '@/stores/supabase';
 
 console.log(supabase)
 
@@ -44,11 +39,9 @@ const password = ref('')
 const handleLogin = async () => {
   try {
     loading.value = true
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signUp({
       email: email.value,
-    })
-    const { password } = await supabase.auth.signInWithOtp({
-      password: password.value,
+      password: password.value
     })
     if (error) throw error
     alert('Check your email for the login link!')
