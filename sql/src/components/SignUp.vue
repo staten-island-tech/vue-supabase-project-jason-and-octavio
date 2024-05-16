@@ -32,7 +32,7 @@ console.log(supabase)
 
 // console.log({insert})
 
-const loading = ref(false)
+/* const loading = ref(false)
 const email = ref('')
 const password = ref('')
 
@@ -52,6 +52,23 @@ const handleLogin = async () => {
   } finally {
     loading.value = false
   }
+} */
+
+const email = ref('')
+const password = ref('')
+
+async function signUpNewUser() {
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+    options: {
+      emailRedirectTo: 'https:///welcome',
+    },
+    data: {
+      user_name: email,
+      created_at: Date,
+    }
+    })
 }
 
 </script>
