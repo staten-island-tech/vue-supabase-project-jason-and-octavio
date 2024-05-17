@@ -1,5 +1,5 @@
 <template>
-<form class="row flex-center flex" @submit.prevent="handleLogin">
+<form class="row flex-center flex" @submit.prevent="handleSignUp">
     <div class="col-6 form-widget">
       <h1 class="header">Sign Up</h1>
       <p class="description">Sign up via magic link with your email and password below</p>
@@ -56,19 +56,24 @@ const handleLogin = async () => {
 
 const email = ref('')
 const password = ref('')
+const loading = ref(false)
 
-async function signUpNewUser() {
-  const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
-    options: {
-      emailRedirectTo: 'https:///welcome',
-    },
-    data: {
-      user_name: email,
-      created_at: Date,
-    }
+const handleSignUp = async () => {
+  try {
+    loading.value = true
+  const { error } = await supabase.auth.signUp({
+    email: email.value,
+    password: password.value,
     })
+    if (error) throw error
+    alert('Check your email')
+   } catch (error) {
+      if (error instanceof Error) {
+        alert(error.message)
+      }
+    } finally {
+      loading.value = false
+}
 }
 
 </script>
