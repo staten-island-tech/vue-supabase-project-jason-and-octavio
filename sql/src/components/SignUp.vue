@@ -2,7 +2,7 @@
 <form class="row flex-center flex" @submit.prevent="handleSignUp">
     <div class="col-6 form-widget">
       <h1 class="header">Sign Up</h1>
-      <p class="description">Sign up via magic link with your email and password below</p>
+      <p class="description">Sign up with your email and password below</p>
       <div>
         <input class="inputField" required type="email" placeholder="Your email" v-model="email" />
         <input class="inputField" required type="password" placeholder="Your password" v-model="password" />
@@ -66,7 +66,7 @@ const handleSignUp = async () => {
     password: password.value,
     })
     if (error) throw error
-    alert('Check your email')
+    alert('Successful Signup')
    } catch (error) {
       if (error instanceof Error) {
         alert(error.message)
@@ -75,6 +75,7 @@ const handleSignUp = async () => {
       loading.value = false
 }
 }
+
 
 </script>
 
