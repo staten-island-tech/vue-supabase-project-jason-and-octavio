@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { supabase } from '../supabase'
+import { supabase } from '@/stores/supabase'
 
 const loading = ref(false)
 const email = ref('')
@@ -42,13 +42,6 @@ const handleLogin = async () => {
     </div>
   </form>
 </template>
-
-<script setup>
-const { data, error } = await supabase.auth.signInWithPassword({
-  email: 'example@email.com',
-  password: 'example-password',
-})
-</script>
 
 <style lang="scss" scoped>
 
