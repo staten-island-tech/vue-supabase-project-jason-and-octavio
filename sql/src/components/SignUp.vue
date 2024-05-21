@@ -1,5 +1,5 @@
 <template>
-<form class="row flex-center flex" @submit.prevent="handleLogin">
+  <form class="row flex-center flex" @submit.prevent="handleLogin">
     <div class="col-6 form-widget">
       <h1 class="header">Sign Up</h1>
       <p class="description">Sign up via magic link with your email and password below</p>
