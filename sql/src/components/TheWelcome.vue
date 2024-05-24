@@ -2,7 +2,7 @@
   <form class="form-widget" @submit.prevent="updateProfile">
     <div>
       <label for="email">Email</label>
-      <input id="email" type="text" :value="session.user.email" disabled />
+      <input id="email" type="text" :value="session.user.email" />
     </div>
     <div>
       <label for="username">Name</label>
@@ -102,6 +102,6 @@ async function signOut() {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
