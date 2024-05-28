@@ -10,7 +10,7 @@
     </div>
     <div>
       <label for="Date">Date</label>
-      <input id="Date" type="url" v-model="created_at" />
+      <input id="Date" type="Date" v-model="created_at" />
     </div>
 
     <div>
@@ -21,7 +21,7 @@
         :disabled="loading"
       />
     </div>
-
+    
     <div>
       <button class="button block" @click="signOut" :disabled="loading">Sign Out</button>
     </div>
@@ -50,7 +50,7 @@ async function getProfile() {
 
     const { data, error, status } = await supabase
       .from('profiles')
-      .select(`user_name, created_at`)
+      .select(`user_name, created_at`, user.user_name, user.created_at)
       .eq('id', user.id)
       .single()
 
