@@ -104,7 +104,3 @@ async function signOut() {
     </div>
   </form>
 </template>
-
-<style lang="scss" scoped>
-
-</style>
