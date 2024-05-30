@@ -1,13 +1,13 @@
 <template>
   <div>
-    <TheWelcome>
+    <Accounts>
       
-    </TheWelcome>
+    </Accounts>
   </div>
 </template>
 
 <script setup>
-import TheWelcome from '@/components/TheWelcome.vue';
+import Accounts from '@/components/Accounts.vue';
 
 
 </script>

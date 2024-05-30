@@ -2,7 +2,7 @@
   <form class="form-widget" @submit.prevent="updateProfile">
     <div>
       <label for="email">Email</label>
-      <input id="email" type="text" :value="session.user.email" />
+      <input id="email" type="text" :value="session.user.email" disabled />
     </div>
     <div>
       <label for="username">Name</label>
@@ -10,16 +10,16 @@
     </div>
     <div>
       <label for="Date">Date</label>
-      <input id="Date" type="Date" v-model="created_at" />
+      <input id="Date" type="text" v-model="created_at" />
     </div>
-
+    
     <div>
       <input
         type="submit"
         class="button primary block"
         :value="loading ? 'Loading ...' : 'Update'"
         :disabled="loading"
-      />
+    />
     </div>
     
     <div>
