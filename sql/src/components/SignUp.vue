@@ -1,61 +1,75 @@
 <template>
-  <form class="row flex-center flex" @submit.prevent="handleLogin">
-    <div class="col-6 form-widget">
-      <h1 class="header">Sign Up</h1>
-      <p class="description">Sign up via magic link with your email and password below</p>
-      <div>
-        <input class="inputField" required type="email" placeholder="Your email" v-model="email" />
-        <input class="inputField" required type="password" placeholder="Your password" v-model="password" />
-      </div>
-      <div>
-        <input
-          type="submit"
-          class="button block"
-          :value="loading ? 'Loading' : 'Send magic link'"
-          :disabled="loading"
-        />
-        </div>
-        </div>
-</form>
+  <div>
+    <div>
+      <form @submit.prevent="handleAuth(login ? 'login' : 'signup')">
+        <input required type="email" placeholder="Email" v-model="email" />
+        <input required type="password" placeholder="Password" v-model="password" />
+        <input type="submit" :value="login ? 'Log in' : 'Sign up'" />
+      </form>
+    </div>
+
+    <button @click="login = !login">
+      <h3 v-if="login">Click to sign up</h3>
+      <h3 v-else>Click to log in</h3>
+    </button>
+  </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { supabase } from '@/stores/supabase'
+import router from '@/router'
+import { sessionStore } from '@/stores/session';
 
-import { ref } from 'vue';
-import { supabase } from '@/stores/supabase';
+const password = ref("")
+const email = ref("")
+const login = ref(true)
 
-console.log(supabase)
-
-// const { insert } = await supabase
-// .from('Posts')
-// .insert({id:1, user_name:'jake'})
-
-// console.log({insert})
-
-const loading = ref(false)
-const email = ref('')
-const password = ref('')
-
-const handleLogin = async () => {
+async function loginOrSignup (type) {
   try {
-    loading.value = true
-    const { error } = await supabase.auth.signUp({
-      email: email.value,
-      password: password.value
-    })
-    if (error) throw error
-    alert('Check your email for the login link!')
+    
+    if (type == "login") {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.value,
+        password: password.value
+      })
+      if (error) throw error
+      return data
+
+    } else {
+      const { data, error } = await supabase.auth.signUp({
+        email: email.value,
+        password: password.value
+      })
+      if (error) throw error
+      return data
+    }
+
   } catch (error) {
     if (error instanceof Error) {
       alert(error.message)
     }
-  } finally {
-    loading.value = false
   }
 }
 
+async function handleAuth (type) {
+  const data = await loginOrSignup(type)
+  
+  if (data && data.user && data.session) {
+    sessionStore().changeSession({ 
+      access_token: data.session.access_token,
+      refresh_token: data.session.refresh_token,
+      token_type: data.session.token_type,
+      authenticated: true,
+      id: data.user.id,
+      email: data.user.email
+    })
+    
+    router.push("/market")
+  }
+}
 </script>
 
-<style scoped>
+<style>
 
 </style>
