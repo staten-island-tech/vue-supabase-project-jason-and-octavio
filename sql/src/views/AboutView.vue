@@ -1,9 +1,8 @@
 <template>
   <div>
     <div v-for="item in currentMarket">
-      <h2>Giving: {{ item.give }}</h2>
-      <h2>Want: {{ item.want }}</h2>
-      <button @click="acceptTrade(item)">Accept</button>
+      <h2>Item: {{ item.give }}</h2>
+      <button @click="acceptTrade(item)">Purchase</button>
     </div>
   </div>
 
@@ -42,9 +41,9 @@ function createTrade () {
 
 async function acceptTrade (item) {
   try {
-    const { error } = await supabase.from("market").delete().eq("want", item.want).eq("give", item.give)
+    const { error } = await supabase.from("market").delete().eq("give", item.give)
     if (error) throw error
-    const index = currentMarket.value.findIndex((item2) => item2.want == item.want && item2.give == item.give)
+    const index = currentMarket.value.findIndex((item2) => item2.give == item.give)
     currentMarket.value.splice(index, 1)
   } catch (error) {
     if (error instanceof Error) {

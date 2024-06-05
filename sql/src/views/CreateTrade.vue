@@ -1,15 +1,9 @@
 <template>
     <div>
-        <h2>You want:</h2>
-        <div>
-            <input type="text" placeholder="Type to add item" v-model="wantItem">
-        </div>
-    </div>
-
-    <div>
         <h2>You are giving:</h2>
         <div>
             <input type="text" placeholder="Type to add item" v-model="giveItem">
+            <input type="text" placeholder="add image using url" v-model="giveItem">
         </div>
     </div>
 
@@ -24,7 +18,6 @@ import { items } from '@/stores/items';
 import { supabase } from '@/stores/supabase';
 import router from '@/router';
 
-const wantItem = ref("")
 const giveItem = ref("")
 
 onMounted(() => {
@@ -34,13 +27,12 @@ onMounted(() => {
 })
 
 async function createOffer () {
-    if (!wantItem || !giveItem) return
+    if (!giveItem) return
 
     try {
         const { error } = await supabase.from('market').insert({
       uuid: sessionStore().session.id,
       give: giveItem.value,
-      want: wantItem.value
     })
     } catch (error) {
         if (error instanceof Error) {
