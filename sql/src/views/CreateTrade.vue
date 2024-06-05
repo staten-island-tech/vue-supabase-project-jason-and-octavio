@@ -1,27 +1,9 @@
 <template>
     <div>
-        <h2>You want: {{ wantItemChose?.name }}</h2>
-        <img :src="wantItemChose?.img" :alt="'Image of '+ wantItemChose?.name">
+        <h2>You are giving:</h2>
         <div>
-            <h2>Choices</h2>
-            <h3>Click to select</h3>
-            <div v-for="item in items" @click="wantItemChose = item">
-                <h3>{{ item.name }}</h3>
-                <img :src="item.img" :alt="'Image of ' + item.name">
-            </div>
-        </div>
-    </div>
-
-    <div>
-        <h2>You are giving: {{ giveItemChose?.name }}</h2>
-        <img :src="giveItemChose?.img" :alt="'Image of '+ giveItemChose?.name">
-        <div>
-            <h2>Choices</h2>
-            <h3>Click to select</h3>
-            <div v-for="item in items" @click="giveItemChose = item">
-                <h3>{{ item.name }}</h3>
-                <img :src="item.img" :alt="'Image of ' + item.name">
-            </div>
+            <input type="text" placeholder="Type to add item" v-model="giveItem">
+            <input type="file" @change="onFileChange" accept="image/*">
         </div>
     </div>
 
@@ -36,8 +18,7 @@ import { items } from '@/stores/items';
 import { supabase } from '@/stores/supabase';
 import router from '@/router';
 
-const wantItemChose = ref()
-const giveItemChose = ref()
+const giveItem = ref("")
 
 onMounted(() => {
     if (sessionStore().session.id == "") {
@@ -46,13 +27,12 @@ onMounted(() => {
 })
 
 async function createOffer () {
-    if (!wantItemChose || !giveItemChose) return
+    if (!giveItem) return
 
     try {
         const { error } = await supabase.from('market').insert({
       uuid: sessionStore().session.id,
-      give: giveItemChose.value.name,
-      want: wantItemChose.value.name
+      give: giveItem.value,
     })
     } catch (error) {
         if (error instanceof Error) {
