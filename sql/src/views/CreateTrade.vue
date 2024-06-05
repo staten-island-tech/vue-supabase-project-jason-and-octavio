@@ -3,7 +3,7 @@
         <h2>You are giving:</h2>
         <div>
             <input type="text" placeholder="Type to add item" v-model="giveItem">
-            <input type="text" placeholder="add image using url" v-model="giveItem">
+            <input type="file" @change="onFileChange" accept="image/*">
         </div>
     </div>
 
