@@ -20,6 +20,11 @@ const router = createRouter({
       path: '/create-trade',
       name: 'create-trade',
       component: () => import('../views/CreateTrade.vue')
+    },
+    {
+      path: '/check-profile',
+      name: 'check-profile',
+      component: () => import('../views/AccountPage.vue')
     }
   ]
 })

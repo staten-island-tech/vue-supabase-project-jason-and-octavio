@@ -2,15 +2,17 @@
   <div>
     <div v-for="item in currentMarket">
       <h2>Item: {{ item.give }}</h2>
+      <h3>{{ item.description }}</h3>
+      <h3>{{ item.price }}</h3>
       <button @click="acceptTrade(item)">Purchase</button>
     </div>
   </div>
-
+  
   <button @click="createTrade">Create new trade</button>
+  <button @click="checkProfile">Check Profile</button>
 </template>
 
 <script setup>
-import Accounts from '@/components/Accounts.vue';
 import { onMounted, ref } from 'vue';
 import { supabase } from '@/stores/supabase';
 import router from '@/router'
@@ -39,18 +41,8 @@ function createTrade () {
   router.push('/create-trade')
 }
 
-async function acceptTrade (item) {
-  try {
-    const { error } = await supabase.from("market").delete().eq("give", item.give)
-    if (error) throw error
-    const index = currentMarket.value.findIndex((item2) => item2.give == item.give)
-    currentMarket.value.splice(index, 1)
-  } catch (error) {
-    if (error instanceof Error) {
-      alert(error.message)
-    }
-  }
-
+function checkProfile () {
+  router.push('/check-profile')
 }
 
 </script>
