@@ -62,7 +62,8 @@ h3 {
   margin-bottom: 2vh;
   justify-content: space-evenly;
   border-radius: 5%;
-  width: 40%;
+  border: 5px solid black;
+  width: 80%;
   height: 80vh;
   align-content: center;
   padding-left: 50%;
@@ -77,8 +78,8 @@ body {
   margin-bottom: 2vh;
   justify-content: space-evenly;
   border-radius: 5%;
-  width: 40%;
   align-content: center;
+  object-fit: contain;
 }
 .img {
   height: 50%;

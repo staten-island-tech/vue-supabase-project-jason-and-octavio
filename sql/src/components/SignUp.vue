@@ -70,6 +70,8 @@ async function handleAuth (type) {
 }
 </script>
 
-<style>
-
+<style scoped>
+body {
+  margin-top: 100vh;
+}
 </style>
