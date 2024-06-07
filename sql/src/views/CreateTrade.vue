@@ -3,7 +3,10 @@
         <h2>You are giving:</h2>
         <div>
             <input type="text" placeholder="Type to add item" v-model="giveItem">
-            <input type="file" @change="onFileChange" accept="image/*">
+            <!-- <input type="file" @change="onFileChange" accept="image/*">
+            <img :src="imageData" alt="Upload Image"> -->
+            <input type="text" placeholder="Type image URL" v-model="imageUrl">
+            <input type="text" placeholder="Type to add description" v-model="descriptionitem" />
         </div>
     </div>
 
@@ -19,6 +22,8 @@ import { supabase } from '@/stores/supabase';
 import router from '@/router';
 
 const giveItem = ref("")
+const descriptionitem = ref("")
+const imageUrl = ref("");
 
 onMounted(() => {
     if (sessionStore().session.id == "") {
@@ -27,12 +32,14 @@ onMounted(() => {
 })
 
 async function createOffer () {
-    if (!giveItem) return
+    if (!giveItem.value || !descriptionitem.value) return
 
     try {
         const { error } = await supabase.from('market').insert({
       uuid: sessionStore().session.id,
       give: giveItem.value,
+      description: descriptionitem.value,
+      imageUrl: imageUrl.value, // Save image URL
     })
     } catch (error) {
         if (error instanceof Error) {
@@ -43,6 +50,33 @@ async function createOffer () {
     router.push('/market')
 }
 
+// export default {
+//   setup() {
+//     const imageData = ref(null);
+
+//     const onFileChange = (event) => {
+//       const file = event.target.files[0];
+//       if (file && file.type.startsWith('image/')) {
+//         loadImage(file);
+//       } else {
+//         alert('Please upload a valid image file.');
+//       }
+//     };
+
+//     const loadImage = (file) => {
+//       const reader = new FileReader();
+//       reader.onload = (e) => {
+//         imageData.value = e.target.result;
+//       };
+//       reader.readAsDataURL(file);
+//     };
+
+//     return {
+//       imageData,
+//       onFileChange
+//     };
+//   }
+// };
 </script>
 
 <style scoped>

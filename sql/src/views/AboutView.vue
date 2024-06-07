@@ -1,16 +1,17 @@
 <template>
   <div>
-    <div v-for="item in currentMarket">
+    <div v-for="item in currentMarket" class="items">
       <h2>Item: {{ item.give }}</h2>
-      <button @click="acceptTrade(item)">Purchase</button>
+      <h3>{{ item.description }}</h3>
+      <img :src="item.imageUrl" alt="Item Image" v-if="item.imageUrl" class="img"> <!-- Display image if URL exists -->
     </div>
   </div>
-
-  <button @click="createTrade">Create new trade</button>
+  
+  <button @click="createItem">Create new trade</button>
+  <button @click="checkProfile">Check Profile</button>
 </template>
 
 <script setup>
-import Accounts from '@/components/Accounts.vue';
 import { onMounted, ref } from 'vue';
 import { supabase } from '@/stores/supabase';
 import router from '@/router'
@@ -35,26 +36,53 @@ onMounted(async () => {
   }
 })
 
-function createTrade () {
+function createItem () {
   router.push('/create-trade')
 }
 
-async function acceptTrade (item) {
-  try {
-    const { error } = await supabase.from("market").delete().eq("give", item.give)
-    if (error) throw error
-    const index = currentMarket.value.findIndex((item2) => item2.give == item.give)
-    currentMarket.value.splice(index, 1)
-  } catch (error) {
-    if (error instanceof Error) {
-      alert(error.message)
-    }
-  }
-
+function checkProfile () {
+  router.push('/check-profile')
 }
-
 </script>
 
-<style lang="scss" scoped>
+<style scope>
+
+h2 {
+  text-align: center;
+}
+h3 {
+  text-align: center;
+}
+.items {
+  background-color: cadetblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2vh;
+  justify-content: space-evenly;
+  border-radius: 5%;
+  width: 40%;
+  height: 80vh;
+  align-content: center;
+  padding-left: 50%;
+  padding-right: 50%;
+  padding-bottom: 10%;
+}
+body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2vh;
+  justify-content: space-evenly;
+  border-radius: 5%;
+  width: 40%;
+  align-content: center;
+}
+.img {
+  height: 50%;
+  width: 50%;
+}
 
 </style>

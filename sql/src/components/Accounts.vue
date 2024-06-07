@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <form class="form-widget" @submit.prevent="updateProfile">
     <div>
       <label for="email">Email</label>
@@ -104,4 +104,4 @@ async function signOut() {
 
 <style scoped>
 
-</style>
+</style> -->
