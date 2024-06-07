@@ -3,7 +3,7 @@
     <div v-for="item in currentMarket">
       <h2>Item: {{ item.give }}</h2>
       <h3>{{ item.description }}</h3>
-      <button @click="acceptTrade(item)">Purchase</button>
+      <button @click="purchaseItem(item)">Purchase</button>
     </div>
   </div>
   
@@ -35,6 +35,23 @@ onMounted(async () => {
     }
   }
 })
+
+async function purchaseItem(item) {
+  try {
+    const { error } = await supabase.from('purchases').insert({
+      uuid: sessionStore().session.id,
+      item_name: item.give,
+      description: item.description,
+    });
+    if (error) throw error;
+    // Optionally, you can remove the purchased item from the market after purchase
+    // await supabase.from('market').delete().eq('id', item.id);
+  } catch (error) {
+    if (error instanceof Error) {
+      alert(error.message)
+    }
+  }
+}
 
 function createTrade () {
   router.push('/create-trade')

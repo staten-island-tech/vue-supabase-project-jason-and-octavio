@@ -53,11 +53,31 @@ const UserCreatedItems = {
 <!-- </script> -->
 
 <template>
-    <div>
-
+      <div>
+    <h2>Your Created Items</h2>
+    <div v-for="item in createdItems" :key="item.id">
+      <h3>Item: {{ item.give }}</h3>
+      <p>Description: {{ item.description }}</p>
     </div>
+  </div>
 </template>
 
 <script setup>
+import { onMounted, ref } from 'vue';
+import { supabase } from '@/stores/supabase';
+import { sessionStore } from '@/stores/session';
 
+const createdItems = ref([]);
+
+onMounted(async () => {
+  try {
+    const { data, error } = await supabase.from('market').select().eq('uuid', sessionStore().session.id);
+    if (error) throw error;
+    createdItems.value = data;
+  } catch (error) {
+    if (error instanceof Error) {
+      alert(error.message)
+    }
+  }
+});
 </script>
