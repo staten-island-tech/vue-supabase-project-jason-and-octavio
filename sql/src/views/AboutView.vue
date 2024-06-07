@@ -3,7 +3,6 @@
     <div v-for="item in currentMarket">
       <h2>Item: {{ item.give }}</h2>
       <h3>{{ item.description }}</h3>
-      <h3>{{ item.price }}</h3>
       <button @click="acceptTrade(item)">Purchase</button>
     </div>
   </div>
@@ -44,9 +43,21 @@ function createTrade () {
 function checkProfile () {
   router.push('/check-profile')
 }
-
 </script>
 
-<style lang="scss" scoped>
+<style scope>
+
+h2 {
+  text-align: center;
+}
+h3 {
+  text-align: center;
+}
+.infobox {
+  border-color: black;
+}
+body {
+  background-color: cadetblue;
+}
 
 </style>

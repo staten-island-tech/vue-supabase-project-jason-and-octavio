@@ -6,7 +6,6 @@
             <!-- <input type="file" @change="onFileChange" accept="image/*">
             <img :src="imageData" alt="Upload Image"> -->
             <input type="text" placeholder="Type to add description" v-model="descriptionitem" />
-            <input type="text" placeholder="Type to add price" v-model="itemprice"/>
         </div>
     </div>
 
@@ -23,7 +22,6 @@ import router from '@/router';
 
 const giveItem = ref("")
 const descriptionitem = ref("")
-const itemprice = ref("")
 
 onMounted(() => {
     if (sessionStore().session.id == "") {
@@ -39,7 +37,6 @@ async function createOffer () {
       uuid: sessionStore().session.id,
       give: giveItem.value,
       description: descriptionitem.value,
-      price: itemprice.value
     })
     } catch (error) {
         if (error instanceof Error) {
