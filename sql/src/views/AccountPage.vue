@@ -55,10 +55,11 @@ const UserCreatedItems = {
 <template>
       <div>
     <h2>Your Created Items</h2>
-    <div v-for="item in createdItems" :key="item.id">
+    <div v-for="item in createdItems" :key="item.id" class="items">
       <h3>Item: {{ item.give }}</h3>
       <p>Description: {{ item.description }}</p>
     </div>
+    <button @click="goback">Go Back</button>
   </div>
 </template>
 
@@ -66,6 +67,7 @@ const UserCreatedItems = {
 import { onMounted, ref } from 'vue';
 import { supabase } from '@/stores/supabase';
 import { sessionStore } from '@/stores/session';
+import router from '@/router'
 
 const createdItems = ref([]);
 
@@ -80,4 +82,25 @@ onMounted(async () => {
     }
   }
 });
+
+function goback () {
+  router.push('/market')
+}
+
 </script>
+
+<style scoped>
+
+h2 {
+  text-align: center;
+}
+h3 {
+  text-align: center;
+}
+.items {
+    background-color: cadetblue;
+}
+
+
+</style>
+

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-for="item in currentMarket">
+    <div v-for="item in currentMarket" class="items">
       <h2>Item: {{ item.give }}</h2>
       <h3>{{ item.description }}</h3>
-      <button @click="purchaseItem(item)">Purchase</button>
+      <img :src="item.imageUrl" alt="Item Image" v-if="item.imageUrl" class="img"> <!-- Display image if URL exists -->
     </div>
   </div>
   
@@ -36,23 +36,6 @@ onMounted(async () => {
   }
 })
 
-async function purchaseItem(item) {
-  try {
-    const { error } = await supabase.from('purchases').insert({
-      uuid: sessionStore().session.id,
-      item_name: item.give,
-      description: item.description,
-    });
-    if (error) throw error;
-    // Optionally, you can remove the purchased item from the market after purchase
-    // await supabase.from('market').delete().eq('id', item.id);
-  } catch (error) {
-    if (error instanceof Error) {
-      alert(error.message)
-    }
-  }
-}
-
 function createTrade () {
   router.push('/create-trade')
 }
@@ -70,11 +53,36 @@ h2 {
 h3 {
   text-align: center;
 }
-.infobox {
-  border-color: black;
+.items {
+  background-color: cadetblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2vh;
+  justify-content: space-evenly;
+  border-radius: 5%;
+  width: 40%;
+  height: 80vh;
+  align-content: center;
+  padding-left: 50%;
+  padding-right: 50%;
+  padding-bottom: 10%;
 }
 body {
-  background-color: cadetblue;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2vh;
+  justify-content: space-evenly;
+  border-radius: 5%;
+  width: 40%;
+  align-content: center;
+}
+.img {
+  height: 50%;
+  width: 50%;
 }
 
 </style>
