@@ -7,7 +7,7 @@
     </div>
   </div>
   
-  <button @click="createTrade">Create new trade</button>
+  <button @click="createItem">Create new trade</button>
   <button @click="checkProfile">Check Profile</button>
 </template>
 
@@ -36,7 +36,7 @@ onMounted(async () => {
   }
 })
 
-function createTrade () {
+function createItem () {
   router.push('/create-trade')
 }
 
